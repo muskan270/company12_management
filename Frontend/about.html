@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comviva Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #d60805, #1e293b);
+  color: white;
+}
+.menu-items { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.menu-items.show { max-height: 800px; }
+.menu-btn {
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+.menu-btn:hover { background: rgba(255,255,255,0.18); transform: translateX(10px); }
+
+/* ===== HEADER ===== */
+.login-btn { transition: all 0.3s ease; }
+.login-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+/* ===== MARQUEE ===== */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee span {
+  display: inline-block;
+  padding-left: 200%;
+  animation: marquee 10s linear infinite;
+  font-weight: 900;
+  font-size: 28px;
+  background: linear-gradient(90deg,#f59e0b,#ef4444,#22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* ===== MAIN CONTENT ===== */
+.orange-container { background: #ff7a18; height: 100%; border-radius: 12px; overflow: hidden; position: relative; }
+.page { display: none; height: 100%; }
+.page.active { display: block; }
+
+/* Page layout */
+.page-layout { display: flex; height: 100%; align-items: center; padding: 40px; gap: 50px; }
+.page-img { width: 45%; display: flex; justify-content: center; }
+.page-img img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 16px; border: 4px solid #fff; }
+.page-content { width: 55%; color: white; }
+
+/* Oval CEO / VP image */
+.oval-img img { width: 260px; height: 320px; border-radius: 50%; object-fit: cover; border: 5px solid #fff; }
+
+/* Bottom buttons */
+.fixed-btns { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; }
+
+/* Buttons */
+.nav-btn { padding: 10px 25px; background: white; color: #ff7a18; border-radius: 6px; font-weight: bold; }
+
+/* Placeholder pages */
+.placeholder { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 24px; font-weight: bold; color: white; }
+</style>
+</head>
+
+<body class="bg-orange-200 h-screen overflow-hidden">
+
+<!-- HEADER -->
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">C</div>
+    <h1 class="text-xl font-bold">Comviva</h1>
+  </div>
+
+  <button onclick="logout()" class="login-btn bg-red-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-red-700">
+    Logout
+  </button>
+</header>
+
+<div class="flex h-[calc(100vh-64px)]">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar p-4">
+    <button onclick="toggleMenu()" class="text-2xl mb-4 bg-white text-black w-10 h-10 rounded shadow">☰</button>
+
+    <div id="menuItems" class="menu-items space-y-3">
+      <a href="home2.html" class="menu-btn">🏠 Home</a>
+      <a href="about.html" class="menu-btn">ℹ️ About Us</a>
+      <a href="Dashboard.html" class="menu-btn">📊 Dashboard</a>
+      <a href="Employee.html" class="menu-btn">👥 Employees</a>
+      <a href="Project.html" class="menu-btn">📁 Projects</a>
+      <a href="client.html" class="menu-btn">🤝 Clients</a>
+      <a href="FAQ.html" class="menu-btn bg-white/20">❓ FAQ</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- MARQUEE -->
+    <div class="bg-black py-2 marquee">
+      <span>✨ Welcome to Comviva | Contact: 9910173612 ✨</span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-6">
+      <div class="orange-container">
+
+        <!-- HOME PAGE -->
+        <div class="page active" id="home">
+          <div class="page-layout">
+            <div class="page-img">
+              <img src="image/cmp2.webp" alt="Comviva Office">
+            </div>
+            <div class="page-content">
+              <h2 class="text-3xl font-bold mb-4">Comviva Technologies</h2>
+              <p class="mb-4">
+                Comviva is a global leader in digital solutions for telecom and fintech,
+                empowering businesses with next-generation platforms and customer experiences.
+              </p>
+              <button class="nav-btn w-fit" onclick="goToAbout(1)">Go to About Us</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABOUT US SECTION -->
+        <div class="page" id="about">
+
+          <!-- Page 1: Company Overview -->
+          <div class="page active" id="aboutPage1">
+            <div class="page-layout">
+              <div class="page-img">
+                <img src="image/cmp11.jpg" alt="Comviva Campus">
+              </div>
+              <div class="page-content">
+                <h2 class="text-3xl font-bold mb-4">About Comviva</h2>
+                <p class="mb-4">
+                  Comviva is a global leader in digital solutions for telecom and fintech,
+                  enabling businesses to innovate, transform, and grow in a rapidly evolving digital landscape.
+                </p>
+                <p class="mb-4">
+                  Our platforms power customer engagement, payments, messaging, digital commerce,
+                  and enterprise transformation across emerging and mature markets worldwide.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Page 2: CEO -->
+          <div class="page" id="aboutPage2">
+            <div class="page-layout">
+              <div class="page-img oval-img">
+                <img src="image/ceo_image.png" alt="Rajesh Chandiramani">
+              </div>
+              <div class="page-content">
+                <h2 class="text-3xl font-bold mb-2">Rajesh Chandiramani</h2>
+                <p class="mb-2"><b>Designation:</b> Whole-time Director & Chief Executive Officer</p>
+                <p class="mb-4">
+                  Rajesh Chandiramani is the Chief Executive Officer at Comviva, bringing over
+                  30 years of comprehensive experience in spearheading global programs and initiatives
+                  across diverse organizations.
+                </p>
+                <p class="mb-4">
+                  Prior to joining Comviva, he played a pivotal role at Tech Mahindra, where he served
+                  as the Business Unit Head for strategic markets spanning the UK, Europe, Middle East,
+                  Africa, Asia Pacific, Japan, and India within the communications, media, and entertainment vertical.
+                </p>
+                <p class="mb-4">
+                  He has also steered global digital businesses, overseeing cloud, data and analytics,
+                  artificial intelligence, cybersecurity, and blockchain technologies, and led APAC enterprise
+                  growth across diverse verticals.
+                </p>
+                <p>
+                  An alumnus of prestigious institutions such as Harvard Business School and Michigan University,
+                  Rajesh is esteemed for his leadership acumen, strategic vision, and unwavering commitment to driving digital impact.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Page 3: VP -->
+          <div class="page" id="aboutPage3">
+            <div class="page-layout">
+              <div class="page-img oval-img">
+                <img src="image/vp.png" alt="Prashant Pandey">
+              </div>
+              <div class="page-content">
+                <h2 class="text-3xl font-bold mb-2">Prashant Pandey</h2>
+                <p class="mb-2"><b>Designation:</b> Vice President</p>
+                <p class="mb-4">
+                  With over 18 years of extensive experience in managing customers spanning Asia,
+                  the Middle East, and Africa in the telecom industry, Prashant Pandey is a seasoned executive
+                  with a blend of technical and customer management expertise.
+                </p>
+                <p class="mb-4">
+                  His leadership acumen, complemented by hands-on network experience, has driven the successful
+                  delivery of mission-critical projects across diverse ecosystems.
+                </p>
+                <p>
+                  He specializes in providing strategic direction in telecom, IT & products, transformation,
+                  innovation, and operational governance within complex network environments.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Page 4: Location (UPDATED ONLY THIS SECTION) -->
+          <div class="page" id="aboutPage4">
+            <div class="page-layout flex-col w-full gap-5 overflow-y-auto" style="height:100%;">
+
+              <h2 class="text-3xl font-bold text-white text-center">Comviva Global Presence</h2>
+
+              <!-- Country Level Buttons -->
+              <div class="flex justify-center gap-4 flex-wrap">
+                <button class="nav-btn" onclick="showIndia()">India</button>
+                <button class="nav-btn" onclick="showGlobal()">Global</button>
+              </div>
+
+              <!-- India Cities (Hidden by default) -->
+              <div id="indiaCities" class="flex justify-center gap-3 flex-wrap hidden">
+                <button class="nav-btn" onclick="setIndiaCity('gurgaon')">Gurgaon</button>
+                <button class="nav-btn" onclick="setIndiaCity('mumbai')">Mumbai</button>
+                <button class="nav-btn" onclick="setIndiaCity('bangalore')">Bangalore</button>
+                <button class="nav-btn" onclick="setIndiaCity('pune')">Pune</button>
+                <button class="nav-btn" onclick="setIndiaCity('chennai')">Chennai</button>
+              </div>
+
+              <!-- Global Countries (Hidden by default) -->
+              <div id="globalCountries" class="flex justify-center gap-3 flex-wrap hidden">
+                <button class="nav-btn" onclick="setGlobalCountry('usa')">USA</button>
+                <button class="nav-btn" onclick="setGlobalCountry('uk')">UK</button>
+                <button class="nav-btn" onclick="setGlobalCountry('uae')">UAE</button>
+                <button class="nav-btn" onclick="setGlobalCountry('singapore')">Singapore</button>
+                <button class="nav-btn" onclick="setGlobalCountry('southafrica')">South Africa</button>
+              </div>
+
+              <!-- Map Container -->
+              <div class="w-full h-[450px] rounded-xl overflow-hidden border-4 border-white">
+                <iframe id="locationMap"
+                  class="w-full h-full border-none"
+                  src="https://maps.google.com/maps?q=World&t=&z=2&output=embed"
+                  loading="lazy">
+                </iframe>
+              </div>
+
+              <!-- Location Info -->
+              <div class="bg-white rounded-xl p-5 w-full text-center">
+                <h3 class="text-xl font-bold mb-2" id="locationTitle">Global Presence</h3>
+                <p id="locationDesc">
+                  Select a country or city to view Comviva's geographical presence on the map.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="fixed-btns">
+            <button class="nav-btn" onclick="prevAbout()">Back</button>
+            <button class="nav-btn" onclick="nextAbout()">Next</button>
+          </div>
+
+        </div>
+
+        <!-- OTHER PAGES -->
+        <div class="page" id="dashboard"><div class="placeholder">Dashboard Content Here</div></div>
+        <div class="page" id="employees"><div class="placeholder">Employees Content Here</div></div>
+        <div class="page" id="projects"><div class="placeholder">Projects Content Here</div></div>
+        <div class="page" id="clients"><div class="placeholder">Clients Content Here</div></div>
+        <div class="page" id="faq"><div class="placeholder">FAQ Content Here</div></div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('menuItems').classList.toggle('show');
+}
+
+function logout() {
+  window.location.href = "index.html";
+}
+
+/* PAGE NAVIGATION */
+function goToPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  if (page === 'about') showAboutPage(1);
+}
+
+/* ABOUT NAVIGATION */
+let currentAbout = 1;
+function showAboutPage(n) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('aboutPage' + i).classList.remove('active');
+  }
+  currentAbout = n;
+  document.getElementById('aboutPage' + n).classList.add('active');
+}
+function nextAbout() {
+  if (currentAbout < 4) showAboutPage(currentAbout + 1);
+}
+function prevAbout() {
+  if (currentAbout > 1) showAboutPage(currentAbout - 1);
+}
+function goToAbout(n) {
+  goToPage('about');
+  showAboutPage(n);
+}
+
+/* LOCATION LOGIC */
+
+function showIndia() {
+  document.getElementById("indiaCities").classList.remove("hidden");
+  document.getElementById("globalCountries").classList.add("hidden");
+  document.getElementById("locationMap").src =
+    "https://maps.google.com/maps?q=India&t=&z=4&output=embed";
+  document.getElementById("locationTitle").innerText = "India - All Offices";
+  document.getElementById("locationDesc").innerText =
+    "Select a city to view Comviva's presence across India.";
+}
+
+function showGlobal() {
+  document.getElementById("globalCountries").classList.remove("hidden");
+  document.getElementById("indiaCities").classList.add("hidden");
+  document.getElementById("locationMap").src =
+    "https://maps.google.com/maps?q=World&t=&z=2&output=embed";
+  document.getElementById("locationTitle").innerText = "Global Presence";
+  document.getElementById("locationDesc").innerText =
+    "Select a country to view Comviva's global footprint.";
+}
+
+const indiaCities = {
+  gurgaon: { name: "Gurgaon, India", title: "Gurgaon Office", desc: "Comviva's corporate headquarters and major operations hub." },
+  mumbai: { name: "Mumbai, India", title: "Mumbai Office", desc: "Strategic financial and enterprise operations center." },
+  bangalore: { name: "Bangalore, India", title: "Bangalore Office", desc: "Technology and innovation hub with R&D teams." },
+  pune: { name: "Pune, India", title: "Pune Office", desc: "Key development and delivery center." },
+  chennai: { name: "Chennai, India", title: "Chennai Office", desc: "Southern regional operations and service center." }
+};
+
+function setIndiaCity(city) {
+  const data = indiaCities[city];
+  document.getElementById("locationMap").src =
+    "https://maps.google.com/maps?q=" + encodeURIComponent(data.name) + "&t=&z=13&output=embed";
+  document.getElementById("locationTitle").innerText = data.title;
+  document.getElementById("locationDesc").innerText = data.desc;
+}
+
+const globalCountries = {
+  usa: { name: "United States", title: "USA Offices", desc: "Comviva's operations across North America." },
+  uk: { name: "United Kingdom", title: "UK Offices", desc: "Comviva's presence across the UK and Europe." },
+  uae: { name: "United Arab Emirates", title: "UAE Offices", desc: "Regional hub for Middle East operations." },
+  singapore: { name: "Singapore", title: "Singapore Offices", desc: "Asia-Pacific regional headquarters." },
+  southafrica: { name: "South Africa", title: "Africa Offices", desc: "Comviva's presence across African markets." }
+};
+
+function setGlobalCountry(country) {
+  const data = globalCountries[country];
+  document.getElementById("locationMap").src =
+    "https://maps.google.com/maps?q=" + encodeURIComponent(data.name) + "&t=&z=5&output=embed";
+  document.getElementById("locationTitle").innerText = data.title;
+  document.getElementById("locationDesc").innerText = data.desc;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.employee-list .employee {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+  align-items: center;
+}
+.employee.active { background: #f0f0f0; border-radius: 8px; }
+
+.employee img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.progress-bar {
+  background: #eee;
+  height: 6px;
+  border-radius: 3px;
+  margin-top: 4px;
+  width: 100%;
+}
+.progress { height: 6px; background: #ffc107; border-radius: 3px; }
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.salary-info h3 { margin: 0; font-size: 24px; }
+.work-stats { display: flex; gap: 10px; margin-top: 10px; }
+.stat { padding: 5px 10px; border-radius: 5px; color: #fff; }
+.yellow { background: #ffc107; }
+.black { background: #333; }
+.gray { background: #aaa; }
+
+/* Calendar */
+.calendar { margin-top: 20px; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.day-name { text-align: center; font-weight: bold; }
+.day { text-align: center; padding: 10px; background: #fff; border-radius: 5px; }
+.day.past { background: #f0f0f0; }
+
+/* Profile Sidebar */
+.profile-sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.profile-img { width: 80px; border-radius: 50%; display: block; margin: 0 auto 10px; }
+
+.documents button {
+  margin: 5px 0;
+  padding: 5px 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.word { background: #007bff; color: #fff; }
+.ppt { background: #dc3545; color: #fff; }
+
+.stat-bar {
+  background: #eee;
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.fill {
+  height: 8px;
+  border-radius: 4px;
+  background: #ffc107;
+}

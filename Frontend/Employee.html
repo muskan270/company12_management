@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comviva Employees Directory</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body { font-family: 'Inter', sans-serif; background: #fef3c7; }
+.sidebar { width: 260px; background: linear-gradient(180deg, #d60805, #1e293b); color: white; }
+.menu-items { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.menu-items.show { max-height: 600px; }
+.menu-btn { padding: 12px 16px; border-radius: 8px; transition: 0.3s; }
+.menu-btn:hover { background: rgba(255,255,255,0.18); transform: translateX(10px); }
+.marquee { overflow: hidden; white-space: nowrap; padding: 22px 0; }
+.marquee span { display: inline-block; padding-left: 100%; animation: marquee 14s linear infinite; font-weight: 900; font-size: 1.3rem;
+background: linear-gradient(90deg,#11c63b,#ef4444,#22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+.emp-card { transition: 0.3s; cursor: pointer; }
+.emp-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 50; }
+.modal.show { display: flex; }
+.modal-content { background: white; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; padding: 24px; }
+.tab-btn { padding: 8px 16px; font-weight: 600; cursor: pointer; border-b-2; }
+.tab-btn.active { border-color: #3b82f6; color: #3b82f6; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+</style>
+</head>
+
+<body class="h-screen overflow-hidden">
+
+<!-- HEADER -->
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">C</div>
+    <h1 class="text-xl font-bold">Comviva</h1>
+  </div>
+  <button onclick="logout()" class="bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition hover:scale-105 hover:bg-red-700">Logout</button>
+</header>
+
+<div class="flex h-[calc(100vh-64px)]">
+  <!-- SIDEBAR -->
+  <aside class="sidebar p-4">
+    <button onclick="toggleMenu()" class="text-2xl mb-4 bg-white text-black w-10 h-10 rounded shadow">☰</button>
+    <div id="menuItems" class="menu-items space-y-2">
+      <a href="home2.html" class="menu-btn block">🏠 Home</a>
+      <a href="about.html" class="menu-btn block">ℹ️ About Us</a>
+      <a href="dashboard.html" class="menu-btn block">📊 Dashboard</a>
+      <a href="employees.html" class="menu-btn block">👥 Employees</a>
+      <a href="projects.html" class="menu-btn block">📁 Projects</a>
+      <a href="client.html" class="menu-btn block">🤝 Clients</a>
+      <a href="tool.html" class="menu-btn block">🛠 Tools</a>
+      <a href="FAQ.html" class="menu-btn block">❓ FAQ</a>
+      <a href="login.html" class="menu-btn block">🔐 Login</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex-1 flex flex-col">
+    <div class="bg-black marquee">
+      <span>✨ Welcome to Comviva | Contact: 9910173612 ✨ Welcome to Comviva | Contact: 9910173612</span>
+    </div>
+
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div class="p-6">
+        <div class="mb-4 flex flex-col md:flex-row gap-4 justify-between">
+          <select id="sectionFilter" class="px-4 py-2 rounded border focus:ring-2 focus:ring-blue-500" onchange="filterBySection()">
+            <option value="all">All Sections</option>
+            <option value="HR">HR</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Production Support">Production Support</option>
+            <option value="Monitoring">Monitoring</option>
+            <option value="Testing">Testing</option>
+          </select>
+          <input type="text" id="searchInput" placeholder="Search employee by name..." 
+            class="w-full md:w-1/2 px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
+            oninput="searchEmployees()" />
+          <div class="text-gray-700 font-semibold self-center">Showing <span id="countInfo"></span></div>
+        </div>
+
+        <div id="employeeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+
+        <div class="flex justify-center items-center gap-4 mt-8">
+          <button onclick="prevPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Prev</button>
+          <span id="pageInfo" class="font-semibold"></span>
+          <button onclick="nextPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Next</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="employeeModal" class="modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center mb-4">
+      <h2 id="modalName" class="text-2xl font-bold"></h2>
+      <button onclick="closeModal()" class="text-xl font-bold">✖</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b mb-4">
+      <div id="tabPersonal" class="tab-btn active" onclick="showTab('personal')">Personal Details</div>
+      <div id="tabPerformance" class="tab-btn" onclick="showTab('performance')">Performance</div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div id="tabContentPersonal" class="tab-content active grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <img id="modalPhoto" class="w-40 h-40 rounded-full mb-4 border-4 border-orange-400" />
+        <p><strong>Role:</strong> <span id="modalRole"></span></p>
+        <p><strong>Department:</strong> <span id="modalDept"></span></p>
+        <p><strong>Total Experience:</strong> <span id="modalExp"></span> years</p>
+        <p><strong>Years in Current Project:</strong> <span id="modalProjectYears"></span> years</p>
+      </div>
+      <div>
+        <p class="font-semibold">Competency Areas:</p>
+        <ul id="modalCompetency" class="list-disc pl-6 mb-3"></ul>
+        <p class="font-semibold">Current Project:</p>
+        <p id="modalProject" class="mb-2"></p>
+        <p class="font-semibold">Project Tools & Technologies:</p>
+        <ul id="modalProjectTools" class="list-disc pl-6 mb-3"></ul>
+        <p class="font-semibold">Overall Tools Used:</p>
+        <ul id="modalTools" class="list-disc pl-6 mb-3"></ul>
+        <p class="font-semibold">Technologies Used:</p>
+        <ul id="modalTech" class="list-disc pl-6 mb-3"></ul>
+        <p class="font-semibold">Recent Movement / Allocation:</p>
+        <p id="modalMovement"></p>
+      </div>
+    </div>
+
+    <div id="tabContentPerformance" class="tab-content mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <canvas id="workGrowthChart"></canvas>
+      <canvas id="leaveChart"></canvas>
+      <canvas id="skillChart"></canvas>
+      <canvas id="projectChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+// Sidebar toggle & logout
+function toggleMenu(){document.getElementById('menuItems').classList.toggle('show');}
+function logout(){window.location.href="index.html";}
+
+// Tabs
+function showTab(tab){
+  document.getElementById('tabPersonal').classList.remove('active');
+  document.getElementById('tabPerformance').classList.remove('active');
+  document.getElementById('tabContentPersonal').classList.remove('active');
+  document.getElementById('tabContentPerformance').classList.remove('active');
+
+  if(tab==='personal'){
+    document.getElementById('tabPersonal').classList.add('active');
+    document.getElementById('tabContentPersonal').classList.add('active');
+  } else {
+    document.getElementById('tabPerformance').classList.add('active');
+    document.getElementById('tabContentPerformance').classList.add('active');
+  }
+}
+
+// Employee data generation
+const firstNames = ["Puneet","Miraj","Parshant","Riya","Sindhu","Abhinay","Rahul","Khushi","Vickey","Umesh","Kaveri","Tejasvi","Bhavika","Yashika","Prashant","Sumit","Aman","Nira","Muskaan"];
+const lastNames = ["Sharma","Pal","Pandey","Attrie","Kumari","Verma","Durga","Choudhary","Sharma","Pal","Kumar"];
+const sections = ["HR","DevOps","Production Support","Monitoring","Testing"];
+const roles = ["Engineer","Senior Developer","Vice President","Support Engineer","Tester"];
+const competencies = ["Frontend","Backend","Full Stack","Automation","Cloud","Security"];
+const tools = ["Jira","Git","Docker","Kubernetes","Jenkins","Terraform"];
+const technologies = ["Java","Python","React","NodeJS","SQL","AWS"];
+const projects = ["Digital Payment Platform","5G Core Modernization","Monitoring System","Support Tool","Automation Framework"];
+const movements = ["Promoted","Transferred","Assigned New Project","Extended Contract"];
+function randomItem(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function randomSubset(arr,min=2,max=4){ return arr.sort(()=>0.5-Math.random()).slice(0,Math.floor(Math.random()*(max-min+1))+min); }
+
+let employees = [];
+for(let i=1;i<=400;i++){
+  let firstName=randomItem(firstNames), lastName=randomItem(lastNames);
+  let name=(i===1)?"Muskaan Sharma":firstName+" "+lastName;
+  let section=randomItem(sections), role=randomItem(roles), dept=section;
+  let totalExp=Math.floor(Math.random()*18)+2;
+  let projectYears=Math.floor(Math.random()*Math.min(6,totalExp))+1;
+  let empPhoto=(i===1)?"https://randomuser.me/api/portraits/women/68.jpg":`https://randomuser.me/api/portraits/${i%2===0?"men":"women"}/${i%100}.jpg`;
+  employees.push({
+    id:i,name,section,role,department:dept,
+    competencies:randomSubset(competencies),tools:randomSubset(tools),
+    technologies:randomSubset(technologies),project:randomItem(projects),
+    projectTools:randomSubset([...tools,...technologies]),
+    movement:randomItem(movements),experience:totalExp,projectYears,photo:empPhoto
+  });
+}
+
+let currentPage=1, perPage=20, filteredEmployees=[...employees];
+
+function renderEmployees(){
+  const grid = document.getElementById("employeeGrid");
+  grid.innerHTML="";
+  const start=(currentPage-1)*perPage;
+  const pageEmployees=filteredEmployees.slice(start,start+perPage);
+  pageEmployees.forEach(emp=>{
+    const card=document.createElement("div");
+    card.className="emp-card bg-white rounded-xl p-4 shadow text-center";
+    card.innerHTML=`<img src="${emp.photo}" class="w-20 h-20 rounded-full mx-auto mb-3 border-4 border-orange-400"/>
+      <h3 class="font-bold text-lg">${emp.name}</h3>
+      <p class="text-sm text-gray-600">${emp.role}</p>
+      <p class="text-xs text-gray-500">${emp.section}</p>`;
+    card.onclick=()=>openModal(emp);
+    grid.appendChild(card);
+  });
+  document.getElementById("pageInfo").textContent=`Page ${currentPage} of ${Math.ceil(filteredEmployees.length/perPage)}`;
+  document.getElementById("countInfo").textContent=`${filteredEmployees.length} Employees`;
+}
+
+function searchEmployees(){
+  const query=document.getElementById("searchInput").value.toLowerCase();
+  filteredEmployees=employees.filter(emp=>emp.name.toLowerCase().includes(query));
+  currentPage=1;
+  renderEmployees();
+}
+
+function filterBySection(){
+  const section=document.getElementById("sectionFilter").value;
+  filteredEmployees=(section==="all")?[...employees]:employees.filter(emp=>emp.section===section);
+  currentPage=1;
+  renderEmployees();
+}
+
+function nextPage(){ if(currentPage<Math.ceil(filteredEmployees.length/perPage)){ currentPage++; renderEmployees(); } }
+function prevPage(){ if(currentPage>1){ currentPage--; renderEmployees(); } }
+
+let charts={};
+
+function openModal(emp){
+  showTab('personal');
+  document.getElementById("modalName").textContent=emp.name;
+  document.getElementById("modalPhoto").src=emp.photo;
+  document.getElementById("modalRole").textContent=emp.role;
+  document.getElementById("modalDept").textContent=emp.department;
+  document.getElementById("modalExp").textContent=emp.experience;
+  document.getElementById("modalProjectYears").textContent=emp.projectYears;
+  document.getElementById("modalProject").textContent=emp.project;
+  document.getElementById("modalMovement").textContent=emp.movement;
+
+  const compList=document.getElementById("modalCompetency"); compList.innerHTML="";
+  emp.competencies.forEach(c=>{const li=document.createElement("li");li.textContent=c;compList.appendChild(li);});
+
+  const projToolsList=document.getElementById("modalProjectTools"); projToolsList.innerHTML="";
+  emp.projectTools.forEach(t=>{const li=document.createElement("li");li.textContent=t;projToolsList.appendChild(li);});
+
+  const toolsList=document.getElementById("modalTools"); toolsList.innerHTML="";
+  emp.tools.forEach(t=>{const li=document.createElement("li");li.textContent=t;toolsList.appendChild(li);});
+
+  const techList=document.getElementById("modalTech"); techList.innerHTML="";
+  emp.technologies.forEach(t=>{const li=document.createElement("li");li.textContent=t;techList.appendChild(li);});
+
+  document.getElementById("employeeModal").classList.add("show");
+
+  // Performance data
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const workGrowth=Array.from({length:12},()=>Math.floor(Math.random()*100));
+  const leaves=Array.from({length:12},()=>Math.floor(Math.random()*5));
+  const skillLabels=["Frontend","Backend","Cloud","Automation","Security"];
+  const skillData=skillLabels.map(()=>Math.floor(Math.random()*10)+1);
+  const projectLabels=["Project A","Project B","Project C","Project D","Project E"];
+  const projectData=projectLabels.map(()=>Math.floor(Math.random()*100));
+
+  Object.values(charts).forEach(c=>c.destroy());
+
+  charts.workGrowthChart=new Chart(document.getElementById('workGrowthChart').getContext('2d'),{
+    type:'bar',data:{labels:months,datasets:[{label:'Work Growth (%)',data:workGrowth,backgroundColor:'#3b82f6'}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+  });
+
+  charts.leaveChart=new Chart(document.getElementById('leaveChart').getContext('2d'),{
+    type:'bar',data:{labels:months,datasets:[{label:'Leaves Taken',data:leaves,backgroundColor:'#ef4444'}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+  });
+
+  charts.skillChart=new Chart(document.getElementById('skillChart').getContext('2d'),{
+    type:'bar',data:{labels:skillLabels,datasets:[{label:'Skill Level',data:skillData,backgroundColor:'#10b981'}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:10}}}
+  });
+
+  charts.projectChart=new Chart(document.getElementById('projectChart').getContext('2d'),{
+    type:'bar',data:{labels:projectLabels,datasets:[{label:'Completion (%)',data:projectData,backgroundColor:'#f59e0b'}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100}}}
+  });
+}
+
+function closeModal(){ 
+  document.getElementById("employeeModal").classList.remove("show"); 
+  Object.values(charts).forEach(c=>c.destroy());
+}
+
+renderEmployees();
+</script>
+</body>
+</html>

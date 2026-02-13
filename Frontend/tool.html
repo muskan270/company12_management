@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comviva | Tools & Technologies</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #d60805, #1e293b);
+  color: white;
+}
+.menu-items {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.menu-items.show { max-height: 700px; }
+.menu-btn {
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.menu-btn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateX(10px);
+}
+
+/* Marquee */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 22px 0;
+}
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 14s linear infinite;
+  font-weight: 900;
+  font-size: 1.3rem;
+  background: linear-gradient(90deg,#11c63b,#ef4444,#22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Main background */
+.main-container {
+  background: linear-gradient(135deg, #ffffff, #fef3c7, #e0f2fe);
+}
+
+/* Navigation Tabs */
+.tab-btn {
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.3s;
+  background: #f3f4f6;
+}
+.tab-btn.active {
+  background: linear-gradient(90deg,#ef4444,#f97316,#22c55e,#3b82f6);
+  color: white;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+
+/* Cards */
+.info-card {
+  background: white;
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.15);
+  transition: 0.4s;
+}
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 50px rgba(0,0,0,0.28);
+}
+
+/* Expandable Sections */
+details summary {
+  font-size: 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+details summary::-webkit-details-marker { display: none; }
+details[open] summary { color: #ef4444; }
+
+/* Buttons */
+.action-btn {
+  background: linear-gradient(90deg,#ef4444,#f97316,#22c55e,#3b82f6);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.action-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+</style>
+</head>
+
+<body class="bg-orange-200 h-screen overflow-hidden">
+
+<!-- HEADER -->
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">C</div>
+    <h1 class="text-xl font-bold">Comviva</h1>
+  </div>
+  <button onclick="logout()" class="bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition hover:scale-105 hover:bg-red-700">Logout</button>
+</header>
+
+<div class="flex h-[calc(100vh-64px)]">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar p-4">
+    <button onclick="toggleMenu()" class="text-2xl mb-4 bg-white text-black w-10 h-10 rounded shadow">☰</button>
+    <div id="menuItems" class="menu-items space-y-2">
+      <a href="home1.html" class="menu-btn block">🏠 Home</a>
+      <a href="about.html" class="menu-btn block">ℹ️ About Us</a>
+      <a href="dashboard.html" class="menu-btn block">📊 Dashboard</a>
+      <a href="employees.html" class="menu-btn block">👥 Employees</a>
+      <a href="projects.html" class="menu-btn block">📁 Projects</a>
+      <a href="clients.html" class="menu-btn block">🤝 Clients</a>
+      <a href="tools.html" class="menu-btn block">🛠 Tools & Tech</a>
+      <a href="FAQ.html" class="menu-btn block">❓ FAQ</a>
+      <a href="login.html" class="menu-btn block">🔐 Login</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex-1 flex flex-col">
+    <div class="bg-black marquee">
+      <span>🚀 Tools & Technologies Used by Comviva — Click Categories to Explore in Detail 🚀</span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-10 overflow-y-auto">
+      <div class="main-container rounded-xl shadow p-12">
+
+        <!-- INTRO -->
+        <div class="text-center mb-12">
+          <h2 class="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-green-500">
+            Tools & Technologies at Comviva
+          </h2>
+          <p class="text-2xl text-gray-700 max-w-4xl mx-auto">
+            This page clearly explains all tools, technologies, software platforms, development systems, and future innovations used by Comviva — in a simple, user-friendly, and interactive way.
+          </p>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="flex justify-center mb-10">
+          <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="🔍 Search any tool, technology, or software..."
+            class="w-full max-w-xl p-4 text-xl border-2 border-orange-400 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-orange-500">
+        </div>
+
+        <!-- CATEGORY TABS -->
+        <div class="flex flex-wrap justify-center gap-4 mb-14">
+          <button class="tab-btn active" onclick="showSection('telecom', this)">📡 Telecom</button>
+          <button class="tab-btn" onclick="showSection('banking', this)">💳 Banking & FinTech</button>
+          <button class="tab-btn" onclick="showSection('data', this)">📊 Data & AI</button>
+          <button class="tab-btn" onclick="showSection('cloud', this)">☁️ Cloud & DevOps</button>
+          <button class="tab-btn" onclick="showSection('ui', this)">🎨 UI/UX & Mobile</button>
+          <button class="tab-btn" onclick="showSection('security', this)">🔐 Security</button>
+          <button class="tab-btn" onclick="showSection('dev', this)">💻 Software Development</button>
+        </div>
+
+        <!-- ================= TELECOM SECTION ================= -->
+        <section id="telecom" class="content-section">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">📡 Telecom Tools & Technologies</h3>
+
+            <details open>
+              <summary>🔹 Core Telecom Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li><strong>OSS / BSS Platforms:</strong> Used for network operations, billing, service provisioning, and customer lifecycle management.</li>
+                <li><strong>Real-Time Charging Systems:</strong> Instantly calculate and charge customers for voice, SMS, data, and digital services.</li>
+                <li><strong>5G Core Networks:</strong> Power next-generation ultra-fast, low-latency mobile networks.</li>
+                <li><strong>Policy Control & Traffic Management:</strong> Control data usage, bandwidth allocation, and service priority.</li>
+                <li><strong>IoT Connectivity Platforms:</strong> Manage millions of connected devices across industries.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Software & Programming Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Backend: Java, Python, Go</li>
+                <li>Messaging: Apache Kafka, RabbitMQ</li>
+                <li>Databases: PostgreSQL, Oracle, MongoDB, Cassandra</li>
+                <li>APIs: RESTful APIs, GraphQL</li>
+                <li>Containers: Docker, Kubernetes</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 How These Tools Are Used</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Activating SIM cards and digital services within seconds.</li>
+                <li>Handling prepaid and postpaid billing systems for millions of users.</li>
+                <li>Monitoring telecom networks 24/7 to ensure service quality.</li>
+                <li>Supporting roaming, interconnect, and partner ecosystems.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Telecom Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>AI-driven self-healing networks.</li>
+                <li>6G research and next-generation network infrastructure.</li>
+                <li>Edge computing for ultra-low latency services.</li>
+                <li>Smart city and connected infrastructure platforms.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= BANKING SECTION ================= -->
+        <section id="banking" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">💳 Banking & FinTech Tools</h3>
+
+            <details open>
+              <summary>🔹 Banking Platforms & Payment Systems</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li><strong>Digital Wallet Platforms:</strong> Enable mobile wallets, prepaid cards, and stored value accounts.</li>
+                <li><strong>Payment Gateways:</strong> Process online, in-app, and merchant payments.</li>
+                <li><strong>Core Banking Integrations:</strong> Connect with banking systems for account management and transactions.</li>
+                <li><strong>Fraud Detection Systems:</strong> Monitor and prevent suspicious financial activities.</li>
+                <li><strong>AML / KYC Systems:</strong> Ensure compliance with financial regulations.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Software & Technologies Used</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Languages: Java, Kotlin, Python</li>
+                <li>Payment APIs: Visa, Mastercard, UPI, SWIFT, SEPA</li>
+                <li>Databases: PostgreSQL, MySQL, Oracle</li>
+                <li>Security: HSMs, encryption standards (AES, RSA)</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 How These Tools Are Used</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Processing millions of secure financial transactions daily.</li>
+                <li>Enabling peer-to-peer transfers and merchant payments.</li>
+                <li>Managing digital wallets and loyalty programs.</li>
+                <li>Ensuring regulatory compliance and customer protection.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Banking Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>AI-driven fraud prevention.</li>
+                <li>Open banking and API marketplaces.</li>
+                <li>Blockchain-based settlements.</li>
+                <li>Embedded finance platforms.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= DATA & AI SECTION ================= -->
+        <section id="data" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">📊 Data, AI & Analytics Tools</h3>
+
+            <details open>
+              <summary>🔹 Data Platforms & Analytics Systems</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li><strong>Big Data Platforms:</strong> Hadoop, Spark, Kafka Streams.</li>
+                <li><strong>Data Warehouses:</strong> Snowflake, BigQuery, Redshift.</li>
+                <li><strong>Business Intelligence Tools:</strong> Power BI, Tableau, Looker.</li>
+                <li><strong>Data Lakes:</strong> Centralized storage for structured and unstructured data.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 AI & Machine Learning Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>ML Frameworks: TensorFlow, PyTorch, Scikit-learn.</li>
+                <li>NLP: Natural language processing for chatbots and analytics.</li>
+                <li>Computer Vision: Image and video analysis systems.</li>
+                <li>Recommendation Engines: Personalized service offerings.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 How These Tools Are Used</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Predicting customer behavior and churn.</li>
+                <li>Optimizing network performance using AI.</li>
+                <li>Detecting fraud and anomalies in real time.</li>
+                <li>Supporting business decision-making with analytics.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Data & AI Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Generative AI for automated customer engagement.</li>
+                <li>AI-powered network orchestration.</li>
+                <li>Real-time predictive analytics platforms.</li>
+                <li>Ethical AI and responsible AI frameworks.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= CLOUD SECTION ================= -->
+        <section id="cloud" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">☁️ Cloud, Infrastructure & DevOps Tools</h3>
+
+            <details open>
+              <summary>🔹 Cloud Platforms</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Public Clouds: AWS, Microsoft Azure, Google Cloud Platform.</li>
+                <li>Private Clouds: VMware, OpenStack.</li>
+                <li>Hybrid Cloud Architectures.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 DevOps & Automation Tools</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>CI/CD: Jenkins, GitHub Actions, GitLab CI.</li>
+                <li>Infrastructure as Code: Terraform, Ansible, CloudFormation.</li>
+                <li>Container Orchestration: Kubernetes, OpenShift.</li>
+                <li>Monitoring: Prometheus, Grafana, Datadog.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 How These Tools Are Used</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Deploying applications automatically across environments.</li>
+                <li>Scaling telecom and fintech platforms globally.</li>
+                <li>Ensuring high availability and disaster recovery.</li>
+                <li>Reducing deployment time and operational risk.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Cloud Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Serverless computing.</li>
+                <li>Edge cloud and distributed computing.</li>
+                <li>AI-powered cloud optimization.</li>
+                <li>Green cloud and energy-efficient infrastructure.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= UI/UX SECTION ================= -->
+        <section id="ui" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">🎨 UI/UX, Web & Mobile Technologies</h3>
+
+            <details open>
+              <summary>🔹 Frontend & Web Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Frameworks: React, Angular, Vue.js.</li>
+                <li>Styling: Tailwind CSS, Bootstrap, Sass.</li>
+                <li>Web Standards: HTML5, CSS3, JavaScript ES6+.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Mobile Application Platforms</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Android: Kotlin, Java.</li>
+                <li>iOS: Swift.</li>
+                <li>Cross-platform: Flutter, React Native.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 UX Design Tools</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Figma, Adobe XD, Sketch.</li>
+                <li>User research tools and usability testing platforms.</li>
+                <li>Design systems and component libraries.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future UI/UX Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Voice-based user interfaces.</li>
+                <li>Augmented reality (AR) and virtual reality (VR).</li>
+                <li>AI-powered personalization.</li>
+                <li>Accessibility-first design systems.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= SECURITY SECTION ================= -->
+        <section id="security" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">🔐 Security, Privacy & Compliance Tools</h3>
+
+            <details open>
+              <summary>🔹 Cybersecurity Systems</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Identity & Access Management (IAM) systems.</li>
+                <li>Network security tools: Firewalls, IDS/IPS.</li>
+                <li>Endpoint protection platforms.</li>
+                <li>Security monitoring and SIEM systems.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Data Protection & Privacy</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Encryption technologies: AES, RSA, TLS.</li>
+                <li>Data loss prevention (DLP) systems.</li>
+                <li>Tokenization and anonymization platforms.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Compliance & Governance</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Regulatory compliance systems (GDPR, PCI-DSS, ISO 27001).</li>
+                <li>Audit management and risk assessment platforms.</li>
+                <li>Policy management and compliance automation tools.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Security Technologies</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Zero-trust security architectures.</li>
+                <li>AI-driven threat detection.</li>
+                <li>Quantum-resistant encryption.</li>
+                <li>Privacy-enhancing computation technologies.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- ================= SOFTWARE DEV SECTION ================= -->
+        <section id="dev" class="content-section hidden">
+          <div class="info-card mb-10 searchable">
+            <h3 class="text-4xl font-bold mb-6">💻 Software Development Tools & Engineering Practices</h3>
+
+            <details open>
+              <summary>🔹 Programming Languages</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Backend: Java, Python, Go, C++.</li>
+                <li>Frontend: JavaScript, TypeScript.</li>
+                <li>Mobile: Kotlin, Swift.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Development Environments & IDEs</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>IntelliJ IDEA, VS Code, Eclipse.</li>
+                <li>Xcode, Android Studio.</li>
+                <li>Terminal and CLI tools.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Version Control & Collaboration</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Git, GitHub, GitLab, Bitbucket.</li>
+                <li>Code review systems and pull request workflows.</li>
+                <li>Agile project management tools (Jira, Azure DevOps).</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Testing, QA & Automation</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>Unit testing frameworks: JUnit, pytest, Jest.</li>
+                <li>Automation testing tools: Selenium, Cypress.</li>
+                <li>Performance testing: JMeter, Gatling.</li>
+                <li>CI/CD integration testing pipelines.</li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>🔹 Future Software Engineering Trends</summary>
+              <ul class="text-xl text-gray-700 list-disc pl-6 mt-4 space-y-3">
+                <li>AI-assisted coding tools.</li>
+                <li>Low-code and no-code platforms.</li>
+                <li>Autonomous testing and deployment pipelines.</li>
+                <li>DevSecOps integration.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('menuItems').classList.toggle('show');
+}
+function logout() {
+  window.location.href = "index.html";
+}
+function showSection(sectionId, btn) {
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach(sec => sec.classList.add('hidden'));
+
+  document.getElementById(sectionId).classList.remove('hidden');
+
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function searchContent() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const elements = document.querySelectorAll('.searchable');
+  elements.forEach(el => {
+    const text = el.innerText.toLowerCase();
+    el.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>

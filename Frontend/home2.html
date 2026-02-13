@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comviva Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #d60805, #1e293b);
+  color: white;
+}
+
+/* Hamburger dropdown */
+.menu-items {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.menu-items.show {
+  max-height: 600px;
+}
+
+/* Sidebar buttons */
+.menu-btn {
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.menu-btn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateX(10px);
+}
+
+/* Running text */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 22px 0;
+}
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 14s linear infinite;
+  font-weight: 900;
+  font-size: 1.9rem;
+  background: linear-gradient(90deg, #11c63b, #ef4444, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* MAIN BACKGROUND */
+.main-container {
+  background: linear-gradient(135deg, #ffffff, #fef3c7, #e0f2fe);
+  position: relative;
+  overflow: hidden;
+}
+
+/* BALLOONS */
+.balloon {
+  position: absolute;
+  bottom: -120px;
+  width: 60px;
+  height: 80px;
+  border-radius: 50%;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  width: 2px;
+  height: 40px;
+  background: #555;
+  transform: translateX(-50%);
+}
+
+.balloon.red { background: #ef4444; left: 10%; animation-delay: 0s; }
+.balloon.blue { background: #3b82f6; left: 25%; animation-delay: 2s; }
+.balloon.green { background: #22c55e; left: 40%; animation-delay: 4s; }
+.balloon.yellow { background: #facc15; left: 55%; animation-delay: 1s; }
+.balloon.purple { background: #a855f7; left: 70%; animation-delay: 3s; }
+.balloon.pink { background: #ec4899; left: 85%; animation-delay: 5s; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-120vh); }
+}
+
+/* CIRCLE SPOTLIGHTS */
+.spotlight {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.45;
+  animation: moveSpot 14s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.spot1 { background: #ff4d4d; top: 10%; left: 15%; animation-delay: 0s; }
+.spot2 { background: #080909; top: 40%; left: 65%; animation-delay: 3s; }
+.spot3 { background: #c57422; top: 65%; left: 30%; animation-delay: 6s; }
+.spot4 { background: #f472b6; top: 20%; left: 50%; animation-delay: 9s; }
+
+@keyframes moveSpot {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(-80px) scale(1.2); }
+}
+
+/* Welcome card styling – unchanged */
+.card {
+  background: rgba(23, 244, 252, 0.92);
+  backdrop-filter: blur(6px);
+  transition: all 0.5s ease;
+  animation: fadeUp 1.4s ease forwards;
+  position: relative;
+  z-index: 10;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+/* Entrance animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Text animation */
+.welcome-title {
+  animation: glowText 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+  from { text-shadow: 0 0 6px #d2bd1c; }
+  to { text-shadow: 0 0 16px #d725ea; }
+}
+
+/* 🇮🇳 REAL FLUTTERING FLAG EFFECT */
+.flag {
+  width: 54px;
+  height: 34px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transform-origin: left center;
+  animation: flutter 1.4s infinite ease-in-out;
+  filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+}
+
+@keyframes flutter {
+  0% {
+    transform: perspective(900px) rotateY(0deg) skewY(0deg);
+  }
+  20% {
+    transform: perspective(900px) rotateY(15deg) skewY(-2deg);
+  }
+  40% {
+    transform: perspective(900px) rotateY(-10deg) skewY(2deg);
+  }
+  60% {
+    transform: perspective(900px) rotateY(12deg) skewY(-2deg);
+  }
+  80% {
+    transform: perspective(900px) rotateY(-6deg) skewY(1deg);
+  }
+  100% {
+    transform: perspective(900px) rotateY(0deg) skewY(0deg);
+  }
+}
+
+/* ===================== */
+/* 🌟 BEAUTIFUL CHATBOT */
+/* ===================== */
+
+.chatbot-launcher {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: radial-gradient(circle at top left, #60a5fa, #8b5cf6);
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  animation: pulse 2s infinite;
+  z-index: 9999;
+}
+
+.chatbot-face {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  background: white;
+  border-radius: 50%;
+}
+
+.chatbot-face::before,
+.chatbot-face::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  background: #6366f1;
+  border-radius: 50%;
+}
+
+.chatbot-face::before { left: 10px; }
+.chatbot-face::after { right: 10px; }
+
+.chatbot-mouth {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  width: 20px;
+  height: 10px;
+  border-bottom: 3px solid #6366f1;
+  border-radius: 0 0 20px 20px;
+  transform: translateX(-50%);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.6); }
+  70% { box-shadow: 0 0 0 16px rgba(99,102,241,0); }
+  100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+}
+
+.chatbot-tooltip {
+  position: fixed;
+  bottom: 130px;
+  right: 35px;
+  background: #1e293b;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  animation: floatTip 2.5s ease-in-out infinite alternate;
+  z-index: 9999;
+}
+
+@keyframes floatTip {
+  from { transform: translateY(0); opacity: 0.9; }
+  to { transform: translateY(-6px); opacity: 1; }
+}
+
+.chatbot-window {
+  position: fixed;
+  bottom: 140px;
+  right: 25px;
+  width: 380px;
+  max-height: 540px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.chatbot-header {
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  color: white;
+  padding: 16px 20px;
+  font-size: 19px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-header .actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.chatbot-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chatbot-header button:hover {
+  opacity: 0.8;
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f8fafc;
+  font-size: 15px;
+}
+
+.message.bot {
+  background: #e0e7ff;
+  color: #1e293b;
+  padding: 12px 16px;
+  border-radius: 16px 16px 16px 0;
+  margin-bottom: 12px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.message.user {
+  background: #22d3ee;
+  color: #0f172a;
+  padding: 12px 16px;
+  border-radius: 16px 16px 0 16px;
+  margin-bottom: 12px;
+  margin-left: auto;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.chatbot-input {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.chatbot-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.chatbot-input button {
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chatbot-input button:hover {
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body class="bg-orange-200 h-screen overflow-hidden">
+
+<!-- HEADER -->
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">
+      C
+    </div>
+    <h1 class="text-xl font-bold">Comviva</h1>
+  </div>
+
+  <!-- FLAG + LOGOUT -->
+  <div class="flex items-center gap-4">
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" 
+      alt="India Flag" 
+      class="flag" />
+
+    <button 
+      onclick="logout()"
+      class="bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition hover:scale-105 hover:bg-red-700">
+      Logout
+    </button>
+  </div>
+
+</header>
+
+<!-- BODY -->
+<div class="flex h-[calc(100vh-64px)]">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar p-4">
+    <button onclick="toggleMenu()"
+      class="text-2xl mb-4 bg-white text-black w-10 h-10 rounded shadow">
+      ☰
+    </button>
+
+    <div id="menuItems" class="menu-items space-y-2">
+      <a href="home2.html" class="menu-btn block">🏠 Home</a>
+      <a href="about.html" class="menu-btn block">ℹ️ About Us</a>
+      <a href="dashboard.html" class="menu-btn block">📊 Dashboard</a>
+      <a href="Employee.html" class="menu-btn block">👥 Employees</a>
+      <a href="projects.html" class="menu-btn block">📁 Projects</a>
+      <a href="client.html" class="menu-btn block">🤝 Clients</a>
+      <a href="tool.html" class="menu-btn block">🛠 Tools&Technology</a>
+      <a href="FAQ.html" class="menu-btn block">❓ FAQ</a>
+      <a href="login.html" class="menu-btn block">🔐 Login</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- MARQUEE -->
+    <div class="bg-black marquee">
+      <span>
+        ✨ Welcome to Comviva | Contact: 9910173612 ✨
+        Welcome to Comviva | Contact: 9910173612
+      </span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-6">
+      <div class="main-container rounded-xl shadow h-full flex items-center justify-center">
+
+        <!-- SPOTLIGHT CIRCLES -->
+        <div class="spotlight spot1"></div>
+        <div class="spotlight spot2"></div>
+        <div class="spotlight spot3"></div>
+        <div class="spotlight spot4"></div>
+
+        <!-- BALLOONS -->
+        <div class="balloon red"></div>
+        <div class="balloon blue"></div>
+        <div class="balloon green"></div>
+        <div class="balloon yellow"></div>
+        <div class="balloon purple"></div>
+        <div class="balloon pink"></div>
+
+        <!-- BIGGER WELCOME CONTAINER (UNCHANGED) -->
+        <div class="card p-16 rounded-2xl text-center max-w-4xl w-full">
+          <h2 class="welcome-title text-5xl font-bold text-gray-800 mb-6">
+            Welcome to Comviva Community Portal
+          </h2>
+
+          <p class="text-xl text-gray-700">
+            Empowering digital transformation and innovation 🚀
+          </p>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+</div>
+
+<!-- 🌟 CHATBOT UI -->
+<div class="chatbot-tooltip" id="chatbotTooltip">
+  💬 We’re here and ready to help you!
+</div>
+
+<div class="chatbot-launcher" onclick="toggleChatbot()">
+  <div class="chatbot-face">
+    <div class="chatbot-mouth"></div>
+  </div>
+</div>
+
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chatbot-header">
+    Comviva Assistant
+    <div class="actions">
+      <button title="Refresh Chat" onclick="resetChat()">🔄</button>
+      <button title="Close" onclick="toggleChatbot()">✖</button>
+    </div>
+  </div>
+  <div class="chatbot-messages" id="chatbotMessages"></div>
+  <div class="chatbot-input">
+    <input type="text" id="chatbotInput" placeholder="Type your message..." onkeypress="handleEnter(event)">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('menuItems').classList.toggle('show');
+}
+
+function logout() {
+  window.location.href = "index.html";
+}
+
+/* ===================== */
+/* 🤖 CHATBOT LOGIC */
+/* ===================== */
+
+const chatbotWindow = document.getElementById("chatbotWindow");
+const chatbotMessages = document.getElementById("chatbotMessages");
+const chatbotInput = document.getElementById("chatbotInput");
+const chatbotTooltip = document.getElementById("chatbotTooltip");
+
+let userName = "";
+let askedName = false;
+
+setInterval(() => {
+  chatbotTooltip.style.display = "block";
+  setTimeout(() => {
+    chatbotTooltip.style.display = "none";
+  }, 3500);
+}, 12000);
+
+function toggleChatbot() {
+  chatbotWindow.style.display = chatbotWindow.style.display === "flex" ? "none" : "flex";
+  if (chatbotMessages.children.length === 0) {
+    addMessage("Hello 👋 Welcome to Comviva! Please type Hi to begin.", "bot");
+  }
+}
+
+function resetChat() {
+  chatbotMessages.innerHTML = "";
+  userName = "";
+  askedName = false;
+  addMessage("Chat refreshed 🔄. Hello 👋 Welcome to Comviva! Please type Hi to begin.", "bot");
+}
+
+function addMessage(text, sender) {
+  const message = document.createElement("div");
+  message.classList.add("message", sender);
+  message.innerText = text;
+  chatbotMessages.appendChild(message);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+function handleEnter(e) {
+  if (e.key === "Enter") sendMessage();
+}
+
+function sendMessage() {
+  const userText = chatbotInput.value.trim();
+  if (!userText) return;
+
+  addMessage(userText, "user");
+  chatbotInput.value = "";
+
+  setTimeout(() => {
+    const botReply = getBotResponse(userText);
+    addMessage(botReply, "bot");
+  }, 500);
+}
+
+function getBotResponse(input) {
+  const text = input.toLowerCase();
+
+  if (!askedName && (text.includes("hi") || text.includes("hello") || text.includes("hey"))) {
+    askedName = true;
+    return "Hi there 😊 May I know your name?";
+  }
+
+  if (askedName && !userName) {
+    userName = input.trim();
+    return `Nice to meet you, ${userName}! 🌟 How can I help you today?`;
+  }
+
+  if (text.includes("company") || text.includes("comviva")) {
+    return "Comviva is a global leader in digital solutions for telecom operators, helping them transform customer engagement and monetization 🚀";
+  }
+  if (text.includes("holiday") || text.includes("holidays")) {
+    return "Our company follows national holidays along with optional festival holidays. You can check the holiday calendar on the HR portal 📅";
+  }
+  if (text.includes("leave") || text.includes("vacation")) {
+    return "Employees are entitled to annual leaves, sick leaves, and casual leaves as per company policy. Would you like help applying for leave?";
+  }
+  if (text.includes("project")) {
+    return "Comviva works on telecom platforms, digital payment systems, customer experience solutions, and more. You can explore the Projects section for details 📁";
+  }
+  if (text.includes("contact") || text.includes("hr")) {
+    return "You can contact HR at hr@comviva.com or use the internal support portal for assistance ☎️";
+  }
+  if (text.includes("office") || text.includes("location")) {
+    return "Comviva has offices across India and globally, including Gurgaon, Bangalore, Pune, Chennai, and international locations 🌍";
+  }
+  if (text.includes("help")) {
+    return "Sure 😊 You can ask me about company info, holidays, leave policy, projects, or office locations.";
+  }
+
+  return `Thanks, ${userName || "there"} 😊 I’m here to help! You can ask about company details, holidays, leave policy, projects, or office locations.`;
+}
+</script>
+
+</body>
+</html>

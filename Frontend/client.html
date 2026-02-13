@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comviva Clients</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #d60805, #1e293b);
+  color: white;
+}
+
+/* Sidebar menu animation */
+.menu-items {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.menu-items.show {
+  max-height: 1000px;
+}
+
+.menu-btn {
+  padding: 14px 18px;
+  border-radius: 10px;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+.menu-btn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateX(8px);
+}
+
+/* Marquee */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 30px 0;
+  background: linear-gradient(90deg, #000000, #111827);
+}
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 14s linear infinite;
+  font-weight: 900;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg,#22c55e,#f97316,#3b82f6,#ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Main background */
+.main-container {
+  background: linear-gradient(135deg, #ffffff, #fef3c7, #e0f2fe);
+  min-height: 100%;
+}
+
+/* Card styling */
+.card {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tabs */
+.tab-btn {
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  color: white;
+}
+.tab-btn:hover {
+  background: rgba(249,115,22,0.15);
+}
+
+/* Search bar */
+.search-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 2px solid #fb923c;
+  outline: none;
+  font-size: 1rem;
+}
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(251,146,60,0.3);
+}
+
+/* Client logos placeholder */
+.client-logo {
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(135deg, #fde68a, #fcd34d);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #92400e;
+  letter-spacing: 0.05em;
+}
+
+/* Modal animation */
+@keyframes modalFade {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.modal-box {
+  animation: modalFade 0.4s ease forwards;
+}
+</style>
+</head>
+
+<body class="bg-orange-200 min-h-screen overflow-hidden">
+
+<!-- HEADER -->
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">
+      C
+    </div>
+    <h1 class="text-xl font-bold">Comviva</h1>
+  </div>
+
+  <button 
+    onclick="logout()"
+    class="bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition hover:scale-105 hover:bg-red-700">
+    Logout
+  </button>
+
+</header>
+
+<!-- BODY -->
+<div class="flex h-[calc(100vh-64px)]">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar p-4">
+    <button onclick="toggleMenu()"
+      class="text-2xl mb-4 bg-white text-black w-10 h-10 rounded shadow">
+      ☰
+    </button>
+
+    <div id="menuItems" class="menu-items space-y-3">
+      <a href="home1.html" class="menu-btn block">🏠 Home</a>
+      <a href="about.html" class="menu-btn block">ℹ️ About Us</a>
+      <a href="dashboard.html" class="menu-btn block">📊 Dashboard</a>
+      <a href="employees.html" class="menu-btn block">👥 Employees</a>
+      <a href="projects.html" class="menu-btn block">📁 Projects</a>
+      <a href="clients.html" class="menu-btn block bg-white/20">🤝 Clients</a>
+      <a href="tools.html" class="menu-btn block">🛠 Tools</a>
+      <a href="FAQ.html" class="menu-btn block">❓ FAQ</a>
+      <a href="login.html" class="menu-btn block">🔐 Login</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- MARQUEE -->
+    <div class="marquee">
+      <span>
+        ✨ Welcome to Comviva | Empowering Global Digital Ecosystems ✨
+        Welcome to Comviva | Empowering Global Digital Ecosystems ✨
+      </span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <div class="main-container rounded-xl shadow p-10 space-y-12">
+
+        <!-- HERO / PREFACE -->
+        <section class="text-center card p-12 rounded-2xl">
+          <h2 class="text-5xl font-bold text-orange-600 mb-6">
+            Our Global Clients & Partners 🌍
+          </h2>
+          <p class="text-xl text-gray-700 max-w-4xl mx-auto mb-8 leading-relaxed">
+            Comviva proudly partners with leading telecom operators, banks, enterprises, and digital innovators across the world.
+            Together, we build future-ready digital ecosystems that transform lives and businesses.
+          </p>
+
+          <div class="flex justify-center gap-10 flex-wrap">
+            <div class="bg-orange-100 px-10 py-7 rounded-xl shadow">
+              <h3 class="text-4xl font-bold text-orange-600">100+</h3>
+              <p class="text-gray-700">Countries Served</p>
+            </div>
+            <div class="bg-green-100 px-10 py-7 rounded-xl shadow">
+              <h3 class="text-4xl font-bold text-green-600">250+</h3>
+              <p class="text-gray-700">Enterprise Clients</p>
+            </div>
+            <div class="bg-blue-100 px-10 py-7 rounded-xl shadow">
+              <h3 class="text-4xl font-bold text-blue-600">20+</h3>
+              <p class="text-gray-700">Years of Innovation</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FILTERS + SEARCH -->
+        <section class="card p-10 rounded-2xl space-y-8">
+
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div class="flex flex-wrap justify-center gap-4">
+              <button class="tab-btn active" onclick="showTab('all', this)">All</button>
+              <button class="tab-btn" onclick="showTab('telecom', this)">Telecom</button>
+              <button class="tab-btn" onclick="showTab('banking', this)">Banking</button>
+              <button class="tab-btn" onclick="showTab('enterprise', this)">Enterprise</button>
+              <button class="tab-btn" onclick="showTab('partners', this)">Partners</button>
+            </div>
+
+            <input 
+              type="text" 
+              id="searchInput" 
+              class="search-input"
+              placeholder="🔍 Search clients, industries, keywords..."
+              onkeyup="searchClients()"
+            >
+          </div>
+
+          <!-- CLIENT GRID -->
+          <div id="clientGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            <!-- TELECOM -->
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Bharti Airtel</div>
+              <h3 class="text-2xl font-bold text-orange-600 mb-3">Bharti Airtel</h3>
+              <p class="text-gray-700 mb-6">
+                Partnering with Airtel to enable digital services, customer engagement platforms, and mobile financial solutions.
+              </p>
+              <button onclick="openModal('Bharti Airtel')" class="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Vodafone</div>
+              <h3 class="text-2xl font-bold text-red-600 mb-3">Vodafone</h3>
+              <p class="text-gray-700 mb-6">
+                Supporting Vodafone with next-generation digital monetization and service orchestration platforms.
+              </p>
+              <button onclick="openModal('Vodafone')" class="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">MTN Group</div>
+              <h3 class="text-2xl font-bold text-yellow-600 mb-3">MTN Group</h3>
+              <p class="text-gray-700 mb-6">
+                Driving mobile money, content delivery, and digital enterprise services across Africa.
+              </p>
+              <button onclick="openModal('MTN Group')" class="bg-yellow-500 text-white px-6 py-3 rounded-xl hover:bg-yellow-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Reliance Jio</div>
+              <h3 class="text-2xl font-bold text-blue-600 mb-3">Reliance Jio</h3>
+              <p class="text-gray-700 mb-6">
+                Powering large-scale digital platforms, billing, and customer lifecycle management.
+              </p>
+              <button onclick="openModal('Reliance Jio')" class="bg-blue-500 text-white px-6 py-3 rounded-xl hover:bg-blue-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Etisalat</div>
+              <h3 class="text-2xl font-bold text-green-600 mb-3">Etisalat</h3>
+              <p class="text-gray-700 mb-6">
+                Enabling next-gen digital ecosystems, cloud platforms, and monetization strategies in the Middle East.
+              </p>
+              <button onclick="openModal('Etisalat')" class="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card telecom card p-10 rounded-2xl">
+              <div class="client-logo mb-6">AT&T</div>
+              <h3 class="text-2xl font-bold text-indigo-600 mb-3">AT&T</h3>
+              <p class="text-gray-700 mb-6">
+                Supporting telecom digital platforms, enterprise connectivity, and customer engagement systems.
+              </p>
+              <button onclick="openModal('AT&T')" class="bg-indigo-500 text-white px-6 py-3 rounded-xl hover:bg-indigo-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <!-- BANKING -->
+            <div class="client-card banking card p-10 rounded-2xl">
+              <div class="client-logo mb-6">HDFC Bank</div>
+              <h3 class="text-2xl font-bold text-emerald-600 mb-3">HDFC Bank</h3>
+              <p class="text-gray-700 mb-6">
+                Enabling digital banking, mobile wallets, and secure financial ecosystems.
+              </p>
+              <button onclick="openModal('HDFC Bank')" class="bg-emerald-500 text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card banking card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Axis Bank</div>
+              <h3 class="text-2xl font-bold text-purple-600 mb-3">Axis Bank</h3>
+              <p class="text-gray-700 mb-6">
+                Supporting digital payments, wallet platforms, and customer engagement services.
+              </p>
+              <button onclick="openModal('Axis Bank')" class="bg-purple-500 text-white px-6 py-3 rounded-xl hover:bg-purple-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <!-- ENTERPRISE -->
+            <div class="client-card enterprise card p-10 rounded-2xl">
+              <div class="client-logo mb-6">IBM</div>
+              <h3 class="text-2xl font-bold text-slate-700 mb-3">IBM</h3>
+              <p class="text-gray-700 mb-6">
+                Partnering to deliver enterprise-grade digital platforms and cloud transformation solutions.
+              </p>
+              <button onclick="openModal('IBM')" class="bg-slate-700 text-white px-6 py-3 rounded-xl hover:bg-slate-800 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card enterprise card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Microsoft</div>
+              <h3 class="text-2xl font-bold text-sky-600 mb-3">Microsoft</h3>
+              <p class="text-gray-700 mb-6">
+                Collaborating on cloud platforms, digital ecosystems, and enterprise solutions.
+              </p>
+              <button onclick="openModal('Microsoft')" class="bg-sky-500 text-white px-6 py-3 rounded-xl hover:bg-sky-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <!-- PARTNERS -->
+            <div class="client-card partners card p-10 rounded-2xl">
+              <div class="client-logo mb-6">AWS</div>
+              <h3 class="text-2xl font-bold text-orange-500 mb-3">Amazon Web Services</h3>
+              <p class="text-gray-700 mb-6">
+                Strategic cloud partner enabling scalable digital ecosystems.
+              </p>
+              <button onclick="openModal('AWS')" class="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+            <div class="client-card partners card p-10 rounded-2xl">
+              <div class="client-logo mb-6">Oracle</div>
+              <h3 class="text-2xl font-bold text-red-500 mb-3">Oracle</h3>
+              <p class="text-gray-700 mb-6">
+                Powering enterprise-grade platforms, databases, and monetization systems.
+              </p>
+              <button onclick="openModal('Oracle')" class="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600 transition">
+                View Partnership
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="card p-12 rounded-2xl">
+          <h3 class="text-4xl font-bold text-center text-orange-600 mb-10">
+            What Our Clients Say 💬
+          </h3>
+
+          <div class="grid md:grid-cols-3 gap-10">
+            <div class="bg-orange-50 p-8 rounded-xl shadow">
+              <p class="text-gray-700 mb-4">
+                “Comviva has been a key partner in our digital transformation journey.”
+              </p>
+              <h4 class="font-bold text-orange-600">— Airtel Digital Team</h4>
+            </div>
+
+            <div class="bg-blue-50 p-8 rounded-xl shadow">
+              <p class="text-gray-700 mb-4">
+                “Their platforms enabled us to launch innovative services faster and at scale.”
+              </p>
+              <h4 class="font-bold text-blue-600">— Vodafone Innovation Team</h4>
+            </div>
+
+            <div class="bg-green-50 p-8 rounded-xl shadow">
+              <p class="text-gray-700 mb-4">
+                “Comviva’s solutions power our mobile money ecosystem across Africa.”
+              </p>
+              <h4 class="font-bold text-green-600">— MTN Group</h4>
+            </div>
+          </div>
+        </section>
+
+        <!-- CALL TO ACTION -->
+        <section class="card p-12 rounded-2xl text-center">
+          <h3 class="text-4xl font-bold text-orange-600 mb-6">
+            Ready to Partner with Comviva? 🚀
+          </h3>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+            Let’s build the future of digital ecosystems together — across telecom, banking, enterprise, and beyond.
+          </p>
+
+          <div class="flex justify-center gap-6 flex-wrap">
+            <button class="bg-orange-500 text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-orange-600 transition hover:scale-105">
+              Explore Solutions
+            </button>
+            <button class="bg-white border border-orange-500 text-orange-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-orange-500 hover:text-white transition hover:scale-105">
+              Contact Sales
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="clientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-2xl shadow-xl max-w-xl w-full p-8 relative modal-box">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl font-bold">✕</button>
+    <h3 id="modalTitle" class="text-3xl font-bold text-orange-600 mb-4"></h3>
+    <p id="modalContent" class="text-gray-700 mb-6"></p>
+    <button onclick="closeModal()" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition">
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('menuItems').classList.toggle('show');
+}
+
+function logout() {
+  window.location.href = "index.html";
+}
+
+/* Tabs */
+function showTab(category, btn) {
+  const cards = document.querySelectorAll(".client-card");
+  const buttons = document.querySelectorAll(".tab-btn");
+  const searchInput = document.getElementById("searchInput");
+
+  buttons.forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  searchInput.value = "";
+
+  cards.forEach(card => {
+    if (category === "all") {
+      card.style.display = "block";
+    } else {
+      card.style.display = card.classList.contains(category) ? "block" : "none";
+    }
+  });
+}
+
+/* Search */
+function searchClients() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".client-card");
+
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+
+/* Modal */
+function openModal(clientName) {
+  const modal = document.getElementById("clientModal");
+  const title = document.getElementById("modalTitle");
+  const content = document.getElementById("modalContent");
+
+  const details = {
+    "Bharti Airtel": "Comviva partners with Airtel to deliver advanced digital platforms, mobile financial services, and customer engagement solutions across India and global markets.",
+    "Vodafone": "Comviva supports Vodafone with next-generation digital monetization platforms, service orchestration, and customer experience transformation across multiple regions.",
+    "MTN Group": "Comviva enables MTN’s mobile money ecosystem, digital content delivery, and enterprise services across Africa.",
+    "Reliance Jio": "Comviva powers Jio’s large-scale digital platforms, billing systems, and customer lifecycle management.",
+    "Etisalat": "Comviva partners with Etisalat to deliver next-gen digital ecosystems, cloud platforms, and monetization strategies across the Middle East.",
+    "AT&T": "Comviva supports AT&T with telecom digital platforms, enterprise connectivity, and customer engagement solutions.",
+    "HDFC Bank": "Comviva enables digital banking, mobile wallets, secure payment systems, and customer engagement platforms for HDFC Bank.",
+    "Axis Bank": "Comviva supports Axis Bank with digital payment platforms, wallet ecosystems, and financial service transformation.",
+    "IBM": "Comviva collaborates with IBM to deliver enterprise-grade digital platforms, cloud solutions, and transformation programs.",
+    "Microsoft": "Comviva partners with Microsoft to deliver cloud-based digital ecosystems and enterprise innovation solutions.",
+    "AWS": "Comviva leverages AWS to build scalable, secure, and high-performance digital ecosystems.",
+    "Oracle": "Comviva partners with Oracle to power enterprise platforms, databases, and monetization systems."
+  };
+
+  title.textContent = clientName;
+  content.textContent = details[clientName] || "Comviva delivers innovative digital solutions to this valued client.";
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeModal() {
+  const modal = document.getElementById("clientModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+</script>
+
+</body>
+</html>
