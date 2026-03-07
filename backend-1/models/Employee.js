@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
 
-const schema=new mongoose.Schema({
- name:String,
- role:String,
- department:String,
- experience:Number,
- projectYears:Number,
- competencies:[String],
- currentProject:String,
- projectTools:[String],
- tools:[String],
- technologies:[String],
- movement:String,
- photo:String
+const employeeSchema = new mongoose.Schema({
+
+    employeeId: String,
+    name: String,
+
+    skills: {
+        type: Object
+    }
+
 });
 
-export default mongoose.model("Employee",schema);
+export default mongoose.model("Employee", employeeSchema);
